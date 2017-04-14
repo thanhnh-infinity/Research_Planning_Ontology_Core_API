@@ -1,4 +1,4 @@
-import ontospy
+#import ontospy
 import Global_Parameters
 import OWLUltility
 import sys
@@ -7,8 +7,8 @@ import urllib2
 import collections
 import subprocess
 
-CDAO_PHYLOTASTIC_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL)
-PHYLO_METHODS_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL)
+#CDAO_PHYLOTASTIC_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL)
+#PHYLO_METHODS_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL)
 
 class MultipleLevelsOfDictionary(collections.OrderedDict):
     def __getitem__(self,item):

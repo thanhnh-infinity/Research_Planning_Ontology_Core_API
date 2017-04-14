@@ -10,10 +10,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://locahost:8080/query?request=get_all_instances_of_a_class&owlclass=phylotastic_resources&ontology=cdao_phylotastic
+http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&owlclass=phylotastic_resources&ontology=cdao_phylotastic
 ```
 ```
-http://localhost:8080/query?request=get_all_instances_of_a_class&owlclass=NameResolution_Operation&ontology=cdao_phylotastic
+http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&owlclass=NameResolution_Operation&ontology=cdao_phylotastic
 ```
 
 #### Service 2.
@@ -26,10 +26,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://localhost:8080/query?request=get_all_directed_subclass_of_a_class&owlclass=operationClassification&ontology=phylo_methods
+http://phylo.cs.nmsu.edu:8000/query?request=get_all_directed_subclass_of_a_class&owlclass=operationClassification&ontology=phylo_methods
 ```
 ```
-http://localhost:8080/query?request=get_all_directed_subclass_of_a_class&owlclass=list_operation&ontology=phylo_methods
+http://phylo.cs.nmsu.edu:8000/query?request=get_all_directed_subclass_of_a_class&owlclass=list_operation&ontology=phylo_methods
 ```
 
 #### Service 3.
@@ -42,10 +42,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://localhost:8080/query?request=get_hierarchy_subclasses_of_a_class&owlclass=operationClassification&ontology=phylo_methods
+http://phylo.cs.nmsu.edu:8000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=operationClassification&ontology=phylo_methods
 ```
 ```
-http://localhost:8080/query?request=get_hierarchy_subclasses_of_a_class&owlclass=list_operation&ontology=phylo_methods
+http://phylo.cs.nmsu.edu:8000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=list_operation&ontology=phylo_methods
 ```
 
 #### Service 4.
@@ -60,8 +60,8 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://localhost:8080/query?request=get_detail_information_of_a_operation&parser_engine=1&owl_operation_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23phylotastic_GetPhylogeneticTree_OT_POST
+http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_operation&parser_engine=1&owl_operation_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23phylotastic_GetPhylogeneticTree_OT_POST
 ```
 ```
-http://localhost:8080/query?request=get_detail_information_of_a_operation&parser_engine=2&owl_operation_name=phylotastic_FindScientificNamesFromFreeText_GNRD_GET&ontology=cdao_phylotastic
+http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_operation&parser_engine=2&owl_operation_name=phylotastic_FindScientificNamesFromFreeText_GNRD_GET&ontology=cdao_phylotastic
 ```
