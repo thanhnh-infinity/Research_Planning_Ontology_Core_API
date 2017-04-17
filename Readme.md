@@ -111,3 +111,20 @@ http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_componen
 ```
 http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_component&parser_engine=2&owl_component_name=param_species&ontology=cdao_phylotastic
 ```
+
+#### Service 7. (IN-PROGRESSIVE)
+
+__Service Name:__  	 	Get detail workflow after running composition
+
+__Resource URI Engine 1:__  		http://<service_host>/request=get_detail_workflow_after_perform_composition
+
+__HTTP Method:__ 		POST
+
+__INPUT:__ [{"resource_id":"","resource_uri":""},{"resource_id":"","resource_uri":""},{"resource_id":"","resource_uri":""},{"resource_id":"","resource_uri":""}]
+
+__OUTPUT:__ <inprogressive> 
+
+__Examples:__ 
+```
+curl - X POST "http://phylo.cs.nmsu.edu:8000/query?request=get_detail_workflow_after_perform_composition" -H "content-type:application/json" -d '<input>' 
+```
