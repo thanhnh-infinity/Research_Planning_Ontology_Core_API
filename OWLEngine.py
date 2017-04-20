@@ -125,6 +125,24 @@ def get_detail_information_of_component_engine_1(component_uri):
     full_uri_class = component_uri
     p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_DETAIL_INFO_OF_A_COMPONENT_INSTANCE','-OWLINSTANCE_URI',full_uri_class], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    return out  
+    return out 
+#7th : Get Triple Data predicates and objects from subject (uri ID)
+def get_triples_predicates_objects_from_subject(subject_uri):
+    full_uri_class = subject_uri
+    p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_TRIPLE_STYLE_PREDICATE_OBJECT_FROM_SUBJECT','-SUBJECT_URI',full_uri_class], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    return out
+#8th : Get Triple Data subjects and predicates from object (uri ID)
+def get_triples_subjects_predicates_from_object(object_uri):
+    full_uri_class = object_uri
+    p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_TRIPLE_STYLE_SUBJECT_PREDICATE_FROM_OBJECT','-OBJECT_URI',full_uri_class], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    return out
+#9th : Get Triple Data subjects and objects from predicate (uri ID)
+def get_triples_subjects_objects_from_predicate(predicate_uri):
+    full_uri_class = predicate_uri
+    p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_TRIPLE_STYLE_SUBJECT_OBJECT_FROM_PREDICATE','-PREDICATE_URI',full_uri_class], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    return out
 #get_all_instances_of_a_directed_class("phylotastic_resources")
 #PEFERCT, CLINGO can return JSON : ./clingo --outf=2 -n 1 planning_base.lp ontology_base.lp initial_state_base.lp goal_state_base.lp 

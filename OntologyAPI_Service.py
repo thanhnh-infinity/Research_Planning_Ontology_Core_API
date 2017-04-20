@@ -213,10 +213,53 @@ class OntologyAPI_Service(object):
                     
                     message = OWLEngine.get_detail_information_of_component_engine_1(owl_component_uri)
                     return return_success_get_json(message)
+
+    # Get Triple Data    
+    def getTriples(self, **request_data):
+              
+        try:
+            triple_type = str(request_data['triple_type']).strip()
+        except:
+            return return_response_error(300, "error", "need provide triple_type param", "JSON")
+        
+        if ((triple_type == 1) or (triple_type == "1")):
+            # Type 1 : Get predicates objects from input subject
+            #   http://localhost:8000/getTriples?triple_type=1&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
+            try:
+                owl_subject_uri = str(request_data['owl_subject_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_subject_uri param - Replace hash symbol (#) by %23 ", "JSON")            
+            
+            message = OWLEngine.get_triples_predicates_objects_from_subject(owl_subject_uri.strip())
+            return return_success_get_json(message)
+        elif ((triple_type == 2) or (triple_type == "2")):
+            # Type 2 : Get predicates objects from input subject
+            #   http://localhost:8000/getTriples?triple_type=2&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa   
+            
+            try:
+                owl_object_uri = str(request_data['owl_object_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_object_uri param - Replace hash symbol (#) by %23 ", "JSON")            
+            
+            message = OWLEngine.get_triples_subjects_predicates_from_object(owl_object_uri.strip())
+            return return_success_get_json(message)
+        elif ((triple_type == 3) or (triple_type == "3")):
+            # Type 3 : Get predicates objects from input subject
+            #   http://localhost:8000/getTriples?triple_type=3&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element              
+            try:
+                owl_predicate_uri = str(request_data['owl_predicate_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_predicate_uri param - Replace hash symbol (#) by %23 ", "JSON")            
+            
+            message = OWLEngine.get_triples_subjects_objects_from_predicate(owl_predicate_uri.strip())
+            return return_success_get_json(message)   
     # Public /index
     index.exposed = True
     # public /query
     query.exposed = True
+    # publoc /getTriples
+    getTriples.exposed = True
+
 if __name__ == '__main__':
     cherrypy.tools.CORS = cherrypy.Tool("before_finalize", CORS)
     # Configure Server

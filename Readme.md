@@ -4,7 +4,7 @@
 
 __Service Name:__  	 	Get all instances of a directed class
 
-__Resource URI - Parser 1:__  		http://<service_host>/query?request=get_all_instances_of_a_class&parser_engine=1&owlclass_uri={}
+__Resource URI - Parser 1:__  		http://<service_host>/query?request=get_all_instances_of_a_class&parser_engine=1&owl_class_uri={}
 
 __Resource URI - Parser 2:__  		http://<service_host>/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass={}}&ontology={}
 
@@ -12,7 +12,7 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=1&owlclass_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23tree_generation
+http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=1&owl_class_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23tree_generation
 ```
 ```
 http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass=phylotastic_resources&ontology=cdao_phylotastic
