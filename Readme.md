@@ -128,3 +128,51 @@ __Examples:__
 ```
 curl - X POST "http://phylo.cs.nmsu.edu:8000/query?request=get_detail_workflow_after_perform_composition" -H "content-type:application/json" -d '<input>' 
 ```
+
+#### Service 8.
+
+__Service Name:__  	 	Get triples data from input
+
+__Resource URI :__  		http://<service_host>/getTriples?triple_type={}
+
+__HTTP Method:__ 		GET,POST
+
+__Parameters:__  			
+* *triple_type:* 	 	Type of triple want to get.
+
+
+__If ```triple_type=1```, provide ```owl_subject_uri``` parameter, returned values are ```predicates``` and ```objects```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=1&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
+```
+
+__If ```triple_type=2```, provide ```owl_object_uri``` parameter, returned values are ```subjects``` and ```predicates```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=2&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
+```
+
+__If ```triple_type=3```, provide ```owl_predicate_uri``` parameter, returned values are ```subjects``` and ```objects```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=3&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+```
+
+__If ```triple_type=4```, provide ```owl_subject_uri``` and ```owl_predicate_uri``` parameter, returned values are ```objects```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+```
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+```
+
+__If ```triple_type=5```, provide ```owl_object_uri``` and ```owl_predicate_uri``` parameter, returned values are ```subjects```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+```
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+```
+
+__If ```triple_type=6```, provide ```owl_subject_uri``` and ```owl_object_uri``` parameter, returned values are ```predicates```__ 
+```
+http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=6&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon
+```

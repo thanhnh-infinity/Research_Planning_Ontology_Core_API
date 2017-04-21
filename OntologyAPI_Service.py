@@ -252,7 +252,54 @@ class OntologyAPI_Service(object):
                 return return_response_error(300, "error", "need provide owl_predicate_uri param - Replace hash symbol (#) by %23 ", "JSON")            
             
             message = OWLEngine.get_triples_subjects_objects_from_predicate(owl_predicate_uri.strip())
-            return return_success_get_json(message)   
+            return return_success_get_json(message)
+        elif ((triple_type == 4) or (triple_type == "4")):
+            # Type 4 : Get objects from input subject + predicate
+            #   http://localhost:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element              
+            #   http://localhost:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+            try:
+                owl_subject_uri = str(request_data['owl_subject_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_subject_uri param - Replace hash symbol (#) by %23 ", "JSON")     
+
+            try:
+                owl_predicate_uri = str(request_data['owl_predicate_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_predicate_uri param - Replace hash symbol (#) by %23 ", "JSON")       
+            
+            message = OWLEngine.get_triples_objects_from_subject_predicate(owl_subject_uri.strip(),owl_predicate_uri.strip())
+            return return_success_get_json(message)
+        elif ((triple_type==5) or (triple_type=="5")):
+            # Type 5 : Get subjects from input object + predicate
+            #   http://localhost:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element              
+            #   http://localhost:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+            try:
+                owl_object_uri = str(request_data['owl_object_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_object_uri param - Replace hash symbol (#) by %23 ", "JSON")     
+
+            try:
+                owl_predicate_uri = str(request_data['owl_predicate_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_predicate_uri param - Replace hash symbol (#) by %23 ", "JSON")       
+            
+            message = OWLEngine.get_triples_subjects_from_object_predicate(owl_object_uri.strip(),owl_predicate_uri.strip())
+            return return_success_get_json(message)
+        elif ((triple_type==6) or (triple_type=="6")):
+            # Type 6 : Get predicates from input subject + object
+            #   http://localhost:8000/getTriples?triple_type=6&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon              
+            try:
+                owl_subject_uri = str(request_data['owl_subject_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_subject_uri param - Replace hash symbol (#) by %23 ", "JSON")     
+
+            try:
+                owl_object_uri = str(request_data['owl_object_uri']).strip()
+            except:
+                return return_response_error(300, "error", "need provide owl_object_uri param - Replace hash symbol (#) by %23 ", "JSON")       
+            
+            message = OWLEngine.get_triples_predicates_from_subject_object(owl_subject_uri.strip(),owl_object_uri.strip())
+            return return_success_get_json(message)
     # Public /index
     index.exposed = True
     # public /query
