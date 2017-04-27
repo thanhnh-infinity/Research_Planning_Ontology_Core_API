@@ -67,13 +67,8 @@ def get_all_directed_subclass_of_class_engine_1(owl_class_uri):
     out, err = p.communicate()
     return out
 #3rd service : Get hierarchy subclasses of a class
-def get_hierarchy_subclasses_of_class(localClassName,sourceOntology):
-    full_uri_class = ""
-    if (sourceOntology == "CDAO_PHYLOTASTIC"):
-        full_uri_class = Global_Parameters.PREFIX_CDAO_PHYLOTASTIC_ONTOLOGY_URL + localClassName
-    elif (sourceOntology == "PHYLO_METHODS"):
-        full_uri_class = Global_Parameters.PREFIX_PHYLOGENETIC_METHODS_ONTOLOGY_URL + localClassName
-    p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_HIERARCHY_CLASSES_FROM_ROOT_CLASS','-OWLCLASS_URI',full_uri_class], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+def get_hierarchy_subclasses_of_class(full_class_uri,level):    
+    p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_HIERARCHY_CLASSES_FROM_ROOT_CLASS','-OWLCLASS_URI',full_class_uri,'-LEVEL',level], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     return out
 

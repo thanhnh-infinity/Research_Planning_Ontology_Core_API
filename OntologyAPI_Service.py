@@ -108,19 +108,19 @@ class OntologyAPI_Service(object):
                 message = OWLEngine.get_all_directed_subclass_of_class_engine_1(owl_class_uri.strip())
                 return return_success_get_json(message)
 
-        #http://localhost:8000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=operationClassification&ontology=phylo_methods
+        #http://localhost:8000/query?request=get_hierarchy_subclasses_of_a_class&owl_class_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl#operationClassification&level=0
         if (request.strip().upper() == "GET_HIERARCHY_SUBCLASSES_OF_A_CLASS"):
             try:
-                owlclass = str(request_data['owlclass']).strip()
+                owl_class_uri = str(request_data['owl_class_uri']).strip()
             except:
-                return return_response_error(300, "error", "need provide owlclass param", "JSON")
+                return return_response_error(300, "error", "need provide owl_class_uri param", "JSON")
 
             try:
-                ontology = str(request_data['ontology']).strip()
+                level = str(request_data['level']).strip()
             except:
-                return return_response_error(300, "error", "need provide ontology param", "JSON")    
+                level = "0"   
                 
-            message = OWLEngine.get_hierarchy_subclasses_of_class(owlclass,ontology.strip().upper())
+            message = OWLEngine.get_hierarchy_subclasses_of_class(owl_class_uri.strip(),level.strip())
             return return_success_get_json(message)
         
         #http://localhost:8000/query?request=get_detail_information_of_a_operation&parser_engine=2&owl_operation_name=phylotastic_FindScientificNamesFromFreeText_GNRD_GET&ontology=cdao_phylotastic
