@@ -213,7 +213,24 @@ class OntologyAPI_Service(object):
                     
                     message = OWLEngine.get_detail_information_of_component_engine_1(owl_component_uri)
                     return return_success_get_json(message)
+    # Build Graph
+    def buildGraph(self, **request_data):
+        try:
+            graph_type = str(request_data['graph_type']).strip()
+        except:
+            graph_type = "1"
 
+        if ((graph_type != "1") and (graph_type != 1) and (graph_type != "2") and (graph_type != 2) and (graph_type != "3") and (graph_type != 3)):
+            return return_response_error(300, "error", "graph type is not correct", "JSON")
+
+        try:
+            entity_uri = str(request_data['owl_entity_uri']).strip()
+        except:
+            return return_response_error(300, "error", "need provide owl_entity_uri param - Replace hash symbol (#) by %23 ", "JSON")            
+
+            
+        message = OWLEngine.get_build_graph_of_ontology_entity(entity_uri.strip(),graph_type)
+        return return_success_get_json(message)    
     # Get Triple Data    
     def getTriples(self, **request_data):
               
@@ -307,6 +324,7 @@ class OntologyAPI_Service(object):
     # publoc /getTriples
     getTriples.exposed = True
 
+    buildGraph.exposed = True
 if __name__ == '__main__':
     cherrypy.tools.CORS = cherrypy.Tool("before_finalize", CORS)
     # Configure Server
