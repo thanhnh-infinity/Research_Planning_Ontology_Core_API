@@ -2,11 +2,11 @@
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <uri id="User Entered Import Resolution" name="http://purl.org/obo/owl/mao.obo" uri="mao.owl"/>
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl" uri="cdao_phylotastic.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl" uri="phylogenetic_methods.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="http://www.w3.org/2006/12/owl2-xml#" uri="mao.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="shadowed:http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl" uri="BackUp_StableImport/cdao_phylotastic.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="shadowed:http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl" uri="BackUp_StableImport/phylogenetic_methods.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1492062626545" name="shadowed:http://www.w3.org/2006/12/owl2-xml#" uri="BackUp_StableImport/mao.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl" uri="cdao_phylotastic.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl" uri="phylogenetic_methods.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="http://www.w3.org/2006/12/owl2-xml#" uri="mao.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="shadowed:http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl" uri="BackUp_StableImport/cdao_phylotastic.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="shadowed:http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl" uri="BackUp_StableImport/phylogenetic_methods.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1496696214029" name="shadowed:http://www.w3.org/2006/12/owl2-xml#" uri="BackUp_StableImport/mao.owl"/>
     </group>
 </catalog>
