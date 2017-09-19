@@ -6,6 +6,8 @@ import os
 import urllib2
 import collections
 import subprocess
+import commands
+import json
 
 #CDAO_PHYLOTASTIC_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL)
 #PHYLO_METHODS_ONT = ontospy.Ontospy(Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL)
@@ -154,10 +156,104 @@ def get_triples_predicates_from_subject_object(subject_uri,object_uri):
     p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_TRIPLE_STYLE_PREDICATE_FROM_SUBJECT_OBJECT','-SUBJECT_URI',subject_uri.strip(),'-OBJECT_URI',object_uri.strip()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     return out 
-#12th : Get Triple Data subjects from object + predicate (uri ID)
+#13rd : Get Graph of an ontology entity
 def get_build_graph_of_ontology_entity(entity_uri,strType):
     p = subprocess.Popen(['java', '-jar', 'JenaOWLEngine/OntologyEngine.jar','-CDAO_ONTOLOGY',Global_Parameters.GLOBAL_CDAO_PHYLOTASTIC_ONTOLOGY_URL,'-PHYLO_METHODS_ONTOLOGY',Global_Parameters.GLOBAL_PHYLO_METHODS_ONTOLOGY_URL,'-QUERY','GET_RELATION_GRAPH_OF_ONTOLOGY_ENTITY','-URI',entity_uri.strip(),'-TYPE',strType.strip()], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    return out  
+    return out
+#14rd : Run planning
+def run_planning_engine(path_to_clingo,path_to_planning_base,path_to_ontology_base,path_to_initial,path_to_goal,number_of_model):
+    p = subprocess.Popen([path_to_clingo, '--outf=2', '-n',number_of_model,path_to_planning_base,path_to_ontology_base,path_to_initial,path_to_goal], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    return out
+
+def parser_occur_perdicate(occur_string):
+    try:
+        occur_info = MultipleLevelsOfDictionary()
+        occur_info["step"] = 0
+        occur_info["web_service"] = ""
+        occur_info["operation"] = ""
+        occur_info["input_param"] = ""
+        occur_info["output_param"] = ""
+
+        prefix = occur_string[0:23]
+        if (prefix == "occurs(run_WS_Operation"):
+            subfix = occur_string[24:]
+            subfix = subfix.replace(")","")
+            
+            elements = subfix.split(",")
+
+            occur_info["step"] = int(elements[4])
+            occur_info["web_service"] = elements[0]
+            occur_info["operation"] = elements[1]
+            occur_info["input_param"] = elements[2]
+            occur_info["output_param"] = elements[3]
+        else:
+            return None    
+
+        return occur_info
+    except Exception,err:
+        print err
+        return None
+
+def process_plan_json_from_raw(array_plans_clingo,json_in):
+    data = MultipleLevelsOfDictionary()
+    
+    json_input = json_in['request_parameters']['input']
+    array_input = []
+    for i in range(0,len(json_input)):
+        input_object = json_input[i]
+        d = MultipleLevelsOfDictionary()
+        d['name'] = input_object['name']
+        d['resource_ontology_id'] = input_object['resource_ontology_id']
+        d['resource_ontology_uri'] = input_object['resource_ontology_uri']
+        array_input.append(d)
+    json_output= json_in['request_parameters']['output']
+    array_output = []
+    for i in range(0,len(json_output)):
+        output_object = json_output[i]
+        d = MultipleLevelsOfDictionary()
+        d['name'] = output_object['name']
+        d['resource_ontology_id'] = output_object['resource_ontology_id']
+        d['resource_ontology_uri'] = output_object['resource_ontology_uri']
+        array_output.append(d)
+
+    array_plan = []    
+    for i in range(0, len(array_plans_clingo)):
+        plan_steps = array_plans_clingo[i]['Value']
+        plan_multi = MultipleLevelsOfDictionary()
+        plan_multi['info']['name'] = 'Test'
+        plan_multi['info']['project'] = 'Phylotastic'
+        plan_multi['info']['step_quantity'] = len(plan_steps)
+        plan_multi['info']['start_index'] = 0
+        plan_multi['info']['last_index'] = len(plan_steps) - 1
+        plan_multi['info']['actions_in_plan_is_ordered'] = True
+        
+        array_step = []
+        for j in range(0, len(plan_steps)):
+            plan_step = plan_steps[j]
+            plan_step_multi = MultipleLevelsOfDictionary()
+            
+            detail_op = parser_occur_perdicate(plan_step)
+            
+            ontology_detail_op = json.loads(get_detail_information_of_operation_engine_1("http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#%s" %(detail_op['operation'])))
+            plan_step_multi = ontology_detail_op
+            plan_step_multi['operation_id'] = detail_op['step']
+
+            array_step.append(plan_step_multi)
+
+        plan_multi['plan'] = array_step    
+
+        array_plan.append(plan_multi)
+    
+
+
+    data['request_parameters']['input'] = array_input
+    data['request_parameters']['output'] = array_output
+    data['workflow_plan'] = array_plan
+    
+
+    return data
+
 #get_all_instances_of_a_directed_class("phylotastic_resources")
 #PEFERCT, CLINGO can return JSON : ./clingo --outf=2 -n 1 planning_base.lp ontology_base.lp initial_state_base.lp goal_state_base.lp 

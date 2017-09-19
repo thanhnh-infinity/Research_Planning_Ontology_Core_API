@@ -1,12 +1,19 @@
 import cherrypy
 import OWLEngine
 import json
+import os
+import sys
+import time
+import subprocess
+import shutil
+import datetime
+from pprint import pprint
 
 def CORS():
     cherrypy.response.headers["Access-Control-Allow-Origin"] = "*"
     cherrypy.response.headers["Access-Control-Allow-Credentials"] = "true"
-    cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET,POST,PUT,DELETE,OPTIONS"
-    cherrypy.response.headers["Access-Control-Allow-Headers"] = "X-Auth-Token,Content-Type,Accept"
+    cherrypy.response.headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS"
+    cherrypy.response.headers["Access-Control-Allow-Headers"] = "X-Auth-Token,Content-Type,Accept,Content-Length"
 
 def return_response_error(code, type, mess, format="JSON"):
     if (format == "JSON"):
@@ -28,7 +35,183 @@ def return_success_get_json(data):
     cherrypy.response.headers['Retry-After'] = 60
     cherrypy.response.status = 200
     return data
+
+class Interact_Planning_Engine(object):
+    _cp_config = {
+        'tools.sessions.on': True,
+        'tools.sessions.httponly': True
+    }
+
+    FULL_PATH_PLANNING_ENGINE_MODEL = os.path.join(os.getcwd(), "PlanningEngine","planning")
+    FULL_PATH_PLANNING_STATES_FOLDER = os.path.join(os.getcwd(),"PlanningEngine" ,"states")
+    FULL_PATH_CLINGO_EXECUTATBLE = os.path.join(os.getcwd(), "PlanningEngine" ,"clingo","clingo")
+
+    # Function
+    def prepareDistinguish_Input_Output_Folder_PerEachProcess(self):
+        current = time.time()
+        states_file_directory = os.path.join(os.getcwd(),"PlanningEngine","states","%s" % str(current))
+        if not os.path.exists(states_file_directory):
+            os.makedirs(states_file_directory)
+        return str(current)
+
+    def index(self):
+        return "Planning Engine Invoking"
+
+    #curl -X POST "http://phylo.cs.nmsu.edu:8000/generateWorkflow" -H "content-type:application/json" -d '{"request_parameters":{"input":[{"name" : "Free Format of Text","resource_ontology_uri":"http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#free_text","resource_ontology_id":"free_text"}],"output":[{"name" : "Species Tree","resource_ontology_uri" : "http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#cdao_species_tree","resource_ontology_id" : "cdao_species_tree"}]}}'    
+    #curl -X POST "http://127.0.0.1:8000/planningEngine/generateWorkflow" -H "content-type:application/json" -d '{"request_parameters":{"input":[{"name" : "Free Format of Text","resource_ontology_uri":"http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#free_text","resource_ontology_id":"free_text"}],"output":[{"name" : "Species Tree","resource_ontology_uri" : "http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#cdao_species_tree","resource_ontology_id" : "cdao_species_tree"}]}}'
+    #curl -X POST "http://127.0.0.1:8000/planningEngine/generateWorkflow" -H "content-type:application/json" -d '{"request_parameters":{"input":[{"name" : "Free Format of Text","resource_ontology_uri":"http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#free_text","resource_ontology_id":"free_text"}],"output":[{"name" : "Species Tree","resource_ontology_uri" : "http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#cdao_species_tree","resource_ontology_id" : "cdao_species_tree"}]},"models":{"number":1}}'
     
+    # Generate workflow
+    @cherrypy.tools.json_out()
+    @cherrypy.tools.json_in()     
+    def generateWorkflow(self,**request_data):
+        
+        CORS()
+        print("Vao day")
+        if cherrypy.request.method == "OPTIONS":
+             return ""
+        #cl = cherrypy.request.headers['Content-Length']
+        #rawbody = cherrypy.request.body.read(int(cl))
+        #body = json.loads(rawbody)
+        #print(body)
+
+        #try:
+        #request = cherrypy.serving.request
+        #pprint(cherrypy.request)
+        input_json = cherrypy.request.json
+        #except Exception,err:
+        #   print(err) 
+        #   return return_response_error(400,"error","error","JSON") 
+
+
+        #Format JSON input example:
+        '''
+        {
+            "request_parameters" : {
+                "input" : [
+                    {
+                        "name" : "Free Format of Text",
+                        "resource_ontology_uri" : "http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#free_text",
+                        "resource_ontology_id" : "free_text"
+                    }
+                ],
+                "output" : [
+                    {
+                        "name" : "Species Tree",
+                        "resource_ontology_uri" : "http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl#cdao_species_tree",
+                        "resource_ontology_id" : "cdao_species_tree"
+                    }
+                ]
+            },
+            "models":{
+                "number":1
+            }
+        }
+        '''
+        
+        try:
+            request_parameters = input_json['request_parameters'];
+        except:
+            return return_response_error(400,"error","Missing input","JSON")
+
+        if ((request_parameters is None) or (request_parameters == '')):    
+            return return_response_error(400,"error","Missing params","JSON")
+        
+        try:
+            models = input_json['models']
+            number_of_models = models["number"]
+        except:
+            number_of_models = 1
+
+        if (number_of_models > 1):
+            return return_response_error(303,"error","Engine has not supported this case yet -- Number of Model > 1","JSON")            
+            
+        # Step 2 : parser input/output
+        json_input_re = request_parameters["input"]
+        if ((json_input_re is None) or (json_input_re == '')):
+            return return_response_error(400,"error","Missing input","JSON")
+        if (len(json_input_re) <= 0):
+            return return_response_error(400,"error","Empty Input","JSON")
+        
+        json_output_re = request_parameters["output"]
+        if ((json_output_re is None) or (json_output_re == '')):
+            return return_response_error(400,"error","Missing output","JSON")
+        if (len(json_output_re) <= 0):
+            return return_response_error(400,"error","Empty Output","JSON")
+        
+        # Step 3 : Write input/output to ASP files
+        folder_name = self.prepareDistinguish_Input_Output_Folder_PerEachProcess()
+    
+        fo = open(os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name ,"initial_state_base.lp"),"wb")
+        print("---Create Initial State--")
+        fo.write("%------------------------------------------------------------------------\n")
+        fo.write("% INPUT PART : Initial State\n")
+        fo.write("%------------------------------------------------------------------------\n")
+        for i in range(0,len(json_input_re)):
+            fo.write("holds(planningHasComponent(%s),0).\n" %(str(json_input_re[i]["resource_ontology_id"])))
+        fo.write("%------------------------------------------------------------------------\n")
+        fo.close()
+
+        fo = open(os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name ,"goal_state_base.lp"), "wb")
+        print("---Create Goal State--")
+        fo.write("%------------------------------------------------------------------------\n")
+        fo.write("% GOAL State\n")
+        fo.write("%------------------------------------------------------------------------\n")
+        content = ""
+        for i in range(0,len(json_output_re)):
+                content = "holds(planningHasComponent(%s),I), " %(str(json_output_re[i]["resource_ontology_id"]))
+                fo.write("goal(I) :- %s step(I).\n" %(content))
+                
+      
+        #fo.write("goal(I) :- %s step(I).\n" %(content))
+        fo.write("%------------------------------------------------------------------------\n")   
+        fo.close()
+        # Step 3 : Run planning
+        #planing_data = OWLEngine.run_planning_engine(self.FULL_PATH_CLINGO_EXECUTATBLE,os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name ,"planning_base.lp"),os.path.join(self.FULL_PATH_PLANNING_ENGINE_MODEL,"ontology_base_translate.lp"))
+        planing_data = OWLEngine.run_planning_engine(self.FULL_PATH_CLINGO_EXECUTATBLE,os.path.join(self.FULL_PATH_PLANNING_ENGINE_MODEL, "planning_base.lp"),os.path.join(self.FULL_PATH_PLANNING_ENGINE_MODEL,"ontology_base_translate.lp"),os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name ,"initial_state_base.lp"),os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name ,"goal_state_base.lp"),str(number_of_models))
+        #print planing_data
+        
+        print("--DELETE Temp Input Folder and Output Folder Rosetta Model")
+        delete_path = os.path.join(self.FULL_PATH_PLANNING_STATES_FOLDER, folder_name)  
+        
+        if (os.path.exists(delete_path)):
+            try:
+                shutil.rmtree(delete_path)
+            except OSError:
+                pass
+        
+        # Step 4 : Read planning data
+        if (number_of_models > 1):
+            return return_response_error(303,"error","Engine has not supported this case yet -- Number of Model > 1","JSON") 
+        elif (number_of_models == 1):
+            json_planning_data = json.loads(planing_data)
+            model_result = str(json_planning_data["Result"])
+            #print json_planning_data["Call"][0]["Witnesses"][0]["Value"]
+            model_number = json_planning_data["Models"]["Number"]
+
+            if ((model_result == "SATISFIABLE") and (model_number == 1)):
+                array_plans_result_json = json_planning_data["Call"][0]["Witnesses"]
+                
+                if (len(array_plans_result_json) > 0):
+                    json_output = OWLEngine.process_plan_json_from_raw(array_plans_result_json,input_json)
+                    return return_success_get_json(json_output)
+                else:
+                    return return_response_error(400,"error","engine error","JSON")     
+
+        else:
+            return return_response_error(400,"error","engine does not accept this request","JSON")     
+        
+
+
+        # Step 5 : Parser planning data to JSON workflow data
+
+       
+        # Step 6 : Return to requester
+        #print "ABC"    
+    #public generate workflow
+    generateWorkflow.exposed = True
+    #public index
+    index.exposed = True
 class OntologyAPI_Service(object):
     _cp_config = {
         'tools.sessions.on': True,
@@ -231,9 +414,10 @@ class OntologyAPI_Service(object):
             
         message = OWLEngine.get_build_graph_of_ontology_entity(entity_uri.strip(),graph_type)
         return return_success_get_json(message)    
+
+    
     # Get Triple Data    
-    def getTriples(self, **request_data):
-              
+    def getTriples(self, **request_data):    
         try:
             triple_type = str(request_data['triple_type']).strip()
         except:
@@ -321,10 +505,11 @@ class OntologyAPI_Service(object):
     index.exposed = True
     # public /query
     query.exposed = True
-    # publoc /getTriples
+    # public /getTriples
     getTriples.exposed = True
-
+    # public /buildGraph
     buildGraph.exposed = True
+
 if __name__ == '__main__':
     cherrypy.tools.CORS = cherrypy.Tool("before_finalize", CORS)
     # Configure Server
@@ -337,5 +522,9 @@ if __name__ == '__main__':
         }
     }   
     # Starting Server
-    cherrypy.quickstart(OntologyAPI_Service(), "/", conf)
+    #cherrypy.quickstart(OntologyAPI_Service(), "/", conf)
+    cherrypy.tree.mount(OntologyAPI_Service(), '/', conf)
+    cherrypy.tree.mount(Interact_Planning_Engine(), '/planningEngine', conf )
     # cherrypy.engine.start()
+    cherrypy.engine.start()
+    cherrypy.engine.block()
