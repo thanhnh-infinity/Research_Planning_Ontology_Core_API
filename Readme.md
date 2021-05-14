@@ -12,13 +12,13 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=1&owl_class_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23tree_generation
+http://104.197.8.189:7000/query?request=get_all_instances_of_a_class&parser_engine=1&owl_class_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23tree_generation
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass=phylotastic_resources&ontology=cdao_phylotastic
+http://104.197.8.189:7000/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass=phylotastic_resources&ontology=cdao_phylotastic
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass=NameResolution_Operation&ontology=cdao_phylotastic
+http://104.197.8.189:7000/query?request=get_all_instances_of_a_class&parser_engine=2&owlclass=NameResolution_Operation&ontology=cdao_phylotastic
 ```
 
 #### Service 2.
@@ -33,13 +33,13 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_directed_subclass_of_a_class&parser_engine=1&owl_class_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23names_operation
+http://104.197.8.189:7000/query?request=get_all_directed_subclass_of_a_class&parser_engine=1&owl_class_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23names_operation
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_directed_subclass_of_a_class&parser_engine=2&owlclass=operationClassification&ontology=phylo_methods
+http://104.197.8.189:7000/query?request=get_all_directed_subclass_of_a_class&parser_engine=2&owlclass=operationClassification&ontology=phylo_methods
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_all_directed_subclass_of_a_class&parser_engine=2&owlclass=list_operation&ontology=phylo_methods
+http://104.197.8.189:7000/query?request=get_all_directed_subclass_of_a_class&parser_engine=2&owlclass=list_operation&ontology=phylo_methods
 ```
 
 #### Service 3.
@@ -52,10 +52,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=operationClassification&ontology=phylo_methods
+http://104.197.8.189:7000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=operationClassification&ontology=phylo_methods
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=list_operation&ontology=phylo_methods
+http://104.197.8.189:7000/query?request=get_hierarchy_subclasses_of_a_class&owlclass=list_operation&ontology=phylo_methods
 ```
 
 #### Service 4.
@@ -70,10 +70,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_operation&parser_engine=1&owl_operation_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23phylotastic_GetPhylogeneticTree_OT_POST
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_operation&parser_engine=1&owl_operation_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23phylotastic_GetPhylogeneticTree_OT_POST
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_operation&parser_engine=2&owl_operation_name=phylotastic_FindScientificNamesFromFreeText_GNRD_GET&ontology=cdao_phylotastic
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_operation&parser_engine=2&owl_operation_name=phylotastic_FindScientificNamesFromFreeText_GNRD_GET&ontology=cdao_phylotastic
 ```
 
 #### Service 5.
@@ -88,10 +88,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_resource&parser_engine=1&owl_resource_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_resource&parser_engine=1&owl_resource_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_resource&parser_engine=2&owl_resource_name=free_text&ontology=cdao_phylotastic
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_resource&parser_engine=2&owl_resource_name=free_text&ontology=cdao_phylotastic
 ```
 
 #### Service 6.
@@ -106,10 +106,10 @@ __HTTP Method:__ 		GET,POST
 		
 __Examples:__ 
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_component&parser_engine=1&owl_component_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_component&parser_engine=1&owl_component_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/query?request=get_detail_information_of_a_component&parser_engine=2&owl_component_name=param_species&ontology=cdao_phylotastic
+http://104.197.8.189:7000/query?request=get_detail_information_of_a_component&parser_engine=2&owl_component_name=param_species&ontology=cdao_phylotastic
 ```
 
 #### Service 7. (IN-PROGRESSIVE)
@@ -126,7 +126,7 @@ __OUTPUT:__ <inprogressive>
 
 __Examples:__ 
 ```
-curl - X POST "http://phylo.cs.nmsu.edu:8000/query?request=get_detail_workflow_after_perform_composition" -H "content-type:application/json" -d '<input>' 
+curl - X POST "http://104.197.8.189:7000/query?request=get_detail_workflow_after_perform_composition" -H "content-type:application/json" -d '<input>' 
 ```
 
 #### Service 8.
@@ -143,36 +143,36 @@ __Parameters:__
 
 __If ```triple_type=1```, provide ```owl_subject_uri``` parameter, returned values are ```predicates``` and ```objects```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=1&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
+http://104.197.8.189:7000/getTriples?triple_type=1&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
 ```
 
 __If ```triple_type=2```, provide ```owl_object_uri``` parameter, returned values are ```subjects``` and ```predicates```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=2&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
+http://104.197.8.189:7000/getTriples?triple_type=2&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa 
 ```
 
 __If ```triple_type=3```, provide ```owl_predicate_uri``` parameter, returned values are ```subjects``` and ```objects```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=3&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+http://104.197.8.189:7000/getTriples?triple_type=3&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
 ```
 
 __If ```triple_type=4```, provide ```owl_subject_uri``` and ```owl_predicate_uri``` parameter, returned values are ```objects```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+http://104.197.8.189:7000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+http://104.197.8.189:7000/getTriples?triple_type=4&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23param_resolved_names&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
 ```
 
 __If ```triple_type=5```, provide ```owl_object_uri``` and ```owl_predicate_uri``` parameter, returned values are ```subjects```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
+http://104.197.8.189:7000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23has_Element 
 ```
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
+http://104.197.8.189:7000/getTriples?triple_type=5&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_predicate_uri=http://www.cs.nmsu.edu/~epontell/Ontologies/phylogenetic_methods.owl%23is_a
 ```
 
 __If ```triple_type=6```, provide ```owl_subject_uri``` and ```owl_object_uri``` parameter, returned values are ```predicates```__ 
 ```
-http://phylo.cs.nmsu.edu:8000/getTriples?triple_type=6&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon
+http://104.197.8.189:7000/getTriples?triple_type=6&owl_subject_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxa&owl_object_uri=http://www.cs.nmsu.edu/~epontell/CDAO/cdao.owl%23bio_taxon
 ```
